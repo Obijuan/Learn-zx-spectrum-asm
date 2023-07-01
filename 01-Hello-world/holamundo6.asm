@@ -1,69 +1,19 @@
 ;-----------------------------------------------------------------------------
-;-- Impresion del caracter 'A' en cada esquina de la pantalla, usando
-;-- la rutina ROM de locate
+;-- Ejemplo para cambiar el borde a otro color
 ;-----------------------------------------------------------------------------
 
-;-------------------------------------------------------------
-;-- RUTINAS DE LA MEMORIA ROM
-;-------------------------------------------------------------
+    ;--- Puerto a escribir para cambiar el color
+    ;--- del borde
+BORDER: EQU $FE
 
-;-------------------------------------------------------
-;-- LOCATE: Posicionar el cursor (x,y)
-;--
-;-- ENTRADA: 
-;--    B : Coordenada y
-;-     C : Coordenada X
-;--
-;--  Esquina superior izquierda: (y=24, x=33)
-;--  Esquina superior derecha: (y=24, x=2)
-;--  Esquina inferior izquierda (y=3, x=33)
-;--  Esquina inferior derecha: (y=3, x=2)
-;-------------------------------------------------------
-LOCATE: EQU $0DD9
-
-
-;-----------------------------------
-;-- MAIN
-;-----------------------------------
     org $8000
 
-    ;-- Caracter en la esquina superior izquierda (24, 33)
-    ld b, 24
-    ld c, 33
-    call LOCATE
+    ld a, 1  ;-- Color azul
 
-    ld a, 'A'
-    rst $10
-
-    ;-- Esquina superior derecha (24, 2)
-    ld b, 24
-    ld c, 2
-    call LOCATE
-
-    ld a, 'A'
-    rst $10
-
-    ;-- Esquina inferior izquierda (3, 33)
-    ld b, 3
-    ld c, 33
-    call LOCATE
-
-    ld a, 'A'
-    rst $10
-
-    ;-- Esquina inferior derecha (3, 2)
-    ld b, 3
-    ld c, 2
-    call LOCATE
-
-    ld a, 'A'
-    rst $10
-
+    ;-- Escribir en el puerto
+    out (BORDER), a
 
     ;-- Terminar
-    ;-- (bucle infinito)
-inf: jr inf
-
-
+    ret
 
     end $8000
