@@ -1,3 +1,3 @@
 #!/bin/sh
 
-zesarux --disable-all-first-aid --nowelcomemessage  $1.tap
+zesarux --disable-all-first-aid --nowelcomemessage --quickexit $1.tap
