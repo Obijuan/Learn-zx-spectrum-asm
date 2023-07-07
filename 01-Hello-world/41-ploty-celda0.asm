@@ -1,7 +1,5 @@
 ;---------------------------------------------------------------------------
-;-- Experimento. Dibujo de un pixel en el primer scanline. Posiciones 0-255
-;-- Para probar la rutina plotx() se hace una animación del pixel, moviéndose
-;-- entre las posiciones 0 y 255
+;-- Experimento. Dibujo de lineas vertical en la primera celda (0,0)
 ;---------------------------------------------------------------------------
 
 ;-- Puerto para cambiar el color del borde
