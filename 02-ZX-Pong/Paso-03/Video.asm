@@ -110,3 +110,29 @@ PrintLine_loop2:
     djnz PrintLine_loop
 
     ret
+
+
+;----------------------------------------------------------------------------
+;-- PrintPaddle:  Imprimir la raqueta
+;--
+;--  ENTRADA:
+;--    * HL: Posicion de la raqueta (direccion)
+;----------------------------------------------------------------------------
+PrintPaddle:
+
+    ;-- Parte superior de la raqueta: blanco
+    ld (hl), ZERO
+    call NextScan
+
+    ;-- Pintar la parte visible de la pala
+    ;-- Longitud: 22 scanlines
+    ld b, 22
+printPaddle_loop:
+    ld (hl), PADDLE
+    call NextScan
+    djnz printPaddle_loop
+
+    ;-- La última línea de la pala en blanco
+    ld (hl), ZERO
+    ret
+

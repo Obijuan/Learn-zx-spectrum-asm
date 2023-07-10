@@ -14,6 +14,14 @@
     ;-- Dibujar linea
     call PrintLine
 
+    ;-- Dibujar raqueta jugador 1
+    ld hl, (paddle1pos)
+    call PrintPaddle
+
+    ;-- Dibujar raqueta jugador 2
+    ld hl, (paddle2pos)
+    call PrintPaddle
+
     ;-- Terminar
     ret
 
