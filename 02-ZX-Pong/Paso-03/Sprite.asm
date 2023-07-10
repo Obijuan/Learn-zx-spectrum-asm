@@ -1,3 +1,4 @@
+;-- Red
 ZERO:  EQU  $00
 LINE:  EQU  $80
 

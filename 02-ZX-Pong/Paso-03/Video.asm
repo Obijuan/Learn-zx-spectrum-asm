@@ -84,29 +84,29 @@ Cls:
 ;-----------------------------------------------------------------------------
 ;-- PrintLine:  Imprimir la linea central de la red
 ;-----------------------------------------------------------------------------
-; PrintLine:
-;     ld b, 24      ;-- Tamaño: 24 líneas
-;     ld hl, $4010  ;-- Columna central, Primera línea (16,0)
+PrintLine:
+    ld b, 24      ;-- Tamaño: 24 líneas
+    ld hl, $4010  ;-- Columna central, Primera línea (16,0)
 
-; PrintLine_loop:
-;     ;-- No hay parte superior de la linea
-;     ld (hl), ZERO
-;     inc h
-;     push bc
+PrintLine_loop:
+    ;-- No hay parte superior de la linea
+    ld (hl), ZERO
+    inc h
+    push bc
 
-;     ld b, 6        ;-- Pintar 6 lineas verticales  
-; PrintLine_loop2:
-;     ld (hl), LINE  ;-- Pintar linea vertical
-;     inc h          ;-- Siguiente scanline
-;     djnz PrintLine_loop2
+    ld b, 6        ;-- Pintar 6 lineas verticales  
+PrintLine_loop2:
+    ld (hl), LINE  ;-- Pintar linea vertical
+    inc h          ;-- Siguiente scanline
+    djnz PrintLine_loop2
 
-;     pop bc
+    pop bc
 
-;     ;-- Pintar ultimo tramo: sin linea
-;     ld (hl), ZERO
-;     call NextScan
+    ;-- Pintar ultimo tramo: sin linea
+    ld (hl), ZERO
+    call NextScan
 
-;     ;-- Repetir para las 24 líneas
-;     djnz PrintLine_loop
+    ;-- Repetir para las 24 líneas
+    djnz PrintLine_loop
 
-;     ret
+    ret

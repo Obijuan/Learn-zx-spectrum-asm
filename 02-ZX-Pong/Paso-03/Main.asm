@@ -11,9 +11,13 @@
     ;-- Borrar pantalla: Tinta blanca, Fondo negro
     call Cls
 
+    ;-- Dibujar linea
+    call PrintLine
+
     ;-- Terminar
     ret
 
+    include "Sprite.asm"
     include "Video.asm"
     
     end $8000
