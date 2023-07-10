@@ -136,3 +136,78 @@ printPaddle_loop:
     ld (hl), ZERO
     ret
 
+;---------------------------------------------------------------------------
+;-- CheckVerticalLimit: Comprobar si raqueta está dentro de los límites
+;--
+;-- ENTRADAS:
+;--   * A: Límite vertical (Formato: TTLLLSSS) Posicion pixel: (0-191)
+;--   * HL: Posicion actual (Format: 010TTSSS LLLCCCCC) Direccion
+;---------------------------------------------------------------------------
+checkVerticalLimit:
+    ;-- Convertir el formato de HL al de A
+    ld b,a  ;-- Preservar el limite vertica (TTLLLSSS) para luego
+
+    ;-- Convertir HL de Formato de direccion a pixel
+    ld a,h    ;-- A = 010TTSSS
+    and $18   ;--(18) 00011000
+              ;-- A = 000TT000  Obtener el tercio en A
+    rlca
+    rlca
+    rlca      ;-- A = TT000000
+    ld c,a    ;-- C = TT000000
+
+    ;-- Obtener el scanline
+    ld a,h    ;--   A = 010TTSSS
+    and $07   ;-- (07)= 00000111
+              ;--   A = 00000SSS  ;-- Scanline
+    or c      ;--   A = TT000SSS
+    ld c,a    ;--   C = TT000SSS
+
+    ;-- Obtener la linea
+    ld a,l    ;--   A = LLLCCCCC
+    and $e0   ;-- (E0)= 11100000
+              ;--   A = LLL00000
+    rrca      ;--   A = 0LLL0000
+    rrca      ;--   A = 00LLL000
+    or c      ;--   A = TTLLLSSS
+
+    ;-- En A tenemos la posicon en el formato de pixel 
+    ;-- Comprobamo con la posicion límite (en b)
+    cp b
+    ret      ;-- Hemos terminado
+             ;-- Pos < Limite --> C a 1
+             ;-- Pos > Limite --> C a 0
+             ;-- Pos = Limite --> Límite alcanzado
+
+;----------------------------------------------------------------------------
+;-- CheckBottom: Evaluar si se ha alcanzado el límite inferior
+;--
+;--  ENTRADA:
+;--    * A:  Limite superior (TTLLLSSS)
+;--    * HL: Posicion actual (010TTSSS LLLCCCCC)
+;--  SALIDA:
+;--    * Z: Limite alcanzado
+;--    * NZ: No se ha alcanzado
+;-----------------------------------------------------------------------------
+CheckBottom:
+    call checkVerticalLimit
+    ret c
+checkBottom_bottom:
+    xor a   ;-- Activar z
+    ret
+
+;-----------------------------------------------------------------------------
+;-- CheckTop: Evaluar si se ha alcanzado el limite superior
+;--
+;--  ENTRADA:
+;--   * A: Margen superior (TTLLLSSS)
+;--   * HL: Posicion actual (010TTSSS LLLCCCCC)
+;--  SALIDA:
+;--   * Z: Se ha alcanzado
+;--   * NZ: No se ha alcanzado
+;------------------------------------------------------------------------------
+CheckTop:
+    call checkVerticalLimit
+    ret
+
+
