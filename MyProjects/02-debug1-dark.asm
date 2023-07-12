@@ -1,38 +1,47 @@
+  include "zxspectrum.h"  
 
-;-- Colores del ZX Spectrum
-;-- Para tinta, papel y borde
-BLACK:    EQU 0
-BLUE:     EQU 1
-RED:      EQU 2
-MAGENTA:  EQU 3
-GREEN:    EQU 4
-CYAN:     EQU 5
-YELLOW:   EQU 6
-WHITE:    EQU 7
+  org $8000
+  
+  ;-- Entrar en el Dark Mode
+  BORDER BLACK
+  CLS BLACK, GREEN
 
-;-- Puerto de salida para establecer el color del borde
-BORDER_PORT: EQU $FE
-
-MACRO BORDER ,color
-  ld a, color
-  out (BORDER_PORT), a
-ENDM
-
-MACRO CLS ,paper,ink
-  ld a, paper << 3 | ink
-  call cls
-ENDM
-
-
-
-    org $8000
-
-    BORDER RED
-    CLS BLACK, GREEN
-
-    ld a, $FF
-    ld hl,$4000
-    ld (hl),a
+  ;-- Led apagado
+  ld a, $00
+  ld ($4000),a
+  ld a, $3C
+  ld ($4100),a
+  ld a, $42
+  ld ($4200),a
+  ld a, $42
+  ld ($4300),a
+  ld a, $42
+  ld ($4400),a
+  ld a, $42
+  ld ($4500),a
+  ld a, $3C
+  ld ($4600),a
+  ld a, $00
+  ld ($4700),a
+  
+  ;-- Led encendido
+  ld a, $00
+  ld ($4001),a
+  ld a, $3C
+  ld ($4101),a
+  ld a, $7E
+  ld ($4201),a
+  ld a, $7E
+  ld ($4301),a
+  ld a, $7A
+  ld ($4401),a
+  ld a, $76
+  ld ($4501),a
+  ld a, $3C
+  ld ($4601),a
+  ld a, $00
+  ld ($4701),a
+    
 
 inf: jr inf
 
