@@ -75,7 +75,7 @@ led_on:
 inf: jr inf
 
 
-    include "Video.asm"
-    include "Keyboard.asm"
+    include "Video.z80"
+    include "Keyboard.z80"
 
     end $8000

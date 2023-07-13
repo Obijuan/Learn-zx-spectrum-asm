@@ -42,8 +42,8 @@ sprite_led_off: DEFB $00, $3C, $42, $42, $42, $42, $3C, $00
 sprite_led_on:  DEFB $00, $3C, $7E, $7E, $7A, $76, $3C, $00
 
 
-    include "Video.asm"
-    include "Keyboard.asm"
-    include "Delay.asm"
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
 
     end $8000

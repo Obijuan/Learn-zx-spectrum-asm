@@ -45,7 +45,7 @@
 
 inf: jr inf
 
-    include "Video.asm"
+    include "Video.z80"
 
     end $8000
 
