@@ -1,0 +1,51 @@
+;----------------------------------------------------------------------------
+;-- RUTINAS DE TIEMPO
+;----------------------------------------------------------------------------
+
+;---------------------------------------
+;-- Esperar 500ms (aproximadamente)
+;---------------------------------------
+wait_500ms:
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    ret
+
+wait_400ms:
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    ret
+
+wait_300ms:
+    call wait_100ms
+    call wait_100ms
+    call wait_100ms
+    ret
+
+wait_200ms:
+    call wait_100ms
+    call wait_100ms
+    ret
+
+;------------------------------------
+;-- Esperar 100ms (aproximadamente)
+;------------------------------------
+wait_100ms:
+    halt
+    halt
+    halt
+    halt
+    halt
+    ret
+
+
+
+wait_60ms:
+    halt
+    halt
+    halt
+    ret

@@ -1,0 +1,122 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER BLACK
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, RED
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+    
+    ;-- Trampa fija: Izquierda
+    ld hl, $4000
+    ld de, sprite_trampa_izq
+    call draw_sprite8
+
+    ;----- Trampa derecha
+    ld hl, $4002
+    ld de, sprite_trama_der
+    call draw_sprite8
+
+loop:
+    ;------ Trama central: movil
+    ;-- Sprite 0
+    ld hl, $4001
+    ld de, sprite_trampa0
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_400ms
+
+    ;-- Sprite 1
+    ld hl, $4001
+    ld de, sprite_trampa1
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 2
+    ld hl, $4001
+    ld de, sprite_trampa2
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 3
+    ld hl, $4001
+    ld de, sprite_trampa3
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 4
+    ld hl, $4001
+    ld de, sprite_trampa4
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 3
+    ld hl, $4001
+    ld de, sprite_trampa3
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 2
+    ld hl, $4001
+    ld de, sprite_trampa2
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    ;-- Sprite 1
+    ld hl, $4001
+    ld de, sprite_trampa1
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_100ms
+
+    jr loop
+
+;-------------------
+;-- SPRITES
+;------------------- 
+;-- Parte iquierda de la trama: Fija
+sprite_trampa_izq: DEFB $00, $00, $00, $FF, $AF, $DF, $AF, $FF
+
+;-- Parte central: Movil
+sprite_trampa0: DEFB $00, $00, $00, $FF, $35, $FA, $35, $FF
+sprite_trampa1: DEFB $00, $00, $00, $7F, $1D, $7A, $1D, $7F
+sprite_trampa2: DEFB $00, $00, $00, $3F, $0D, $3E, $0D, $3F
+sprite_trampa3: DEFB $00, $00, $00, $1F, $07, $1F, $07, $1F
+sprite_trampa4: DEFB $00, $00, $00, $0F, $03, $0F, $03, $0F
+
+;-- Parte derecha: Fija
+sprite_trama_der: DEFB $00, $00, $00, $FF, $55, $AB, $55, $FF
+
+;-- Led medio-encendido
+sprite_led_half: DEFB $00, $3C, $56, $4A, $52, $66, $3C, $00
+
+;-- Led encendido
+sprite_led_on:  DEFB $00, $3C, $7E, $7E, $7A, $76, $3C, $00
+
+
+
+
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
+
+    end $8000
