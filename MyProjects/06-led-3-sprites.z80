@@ -1,0 +1,48 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER BLACK
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, GREEN
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+
+  ;-- Mostrar los 3 sprites
+  ld hl, $4000
+  ld de, sprite_led_off
+  call draw_sprite8
+
+  ld hl, $4001
+  ld de, sprite_led_half
+  call draw_sprite8
+
+  ld hl, $4002
+  ld de, sprite_led_on
+  call draw_sprite8
+
+inf:
+  jr inf
+
+;-------------------
+;-- SPRITES
+;-------------------  
+;-- Led apagado
+sprite_led_off: DEFB $00, $3C, $42, $42, $42, $42, $3C, $00
+
+;-- Led medio-encendido
+sprite_led_half: DEFB $00, $3C, $56, $4A, $52, $66, $3C, $00
+
+;-- Led encendido
+sprite_led_on:  DEFB $00, $3C, $7E, $7E, $7A, $76, $3C, $00
+
+
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
+
+    end $8000

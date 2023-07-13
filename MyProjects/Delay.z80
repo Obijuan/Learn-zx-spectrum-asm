@@ -25,3 +25,8 @@ wait_100ms:
     ret
 
 
+wait_60ms:
+    halt
+    halt
+    halt
+    ret
