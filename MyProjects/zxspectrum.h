@@ -51,3 +51,19 @@ VIDEOSIZE: EQU $1800  ;-- Tamaño: 6KB
 ;---- Memoria de Video: Atributos
 VIDEOATTR:     EQU $5800
 VIDEATTR_SIZE: EQU $300    ;-- 768 bytes (32*24)
+
+;------------------------------------
+;--- VARIABLES DEL SISTEMA
+;------------------------------------
+
+;-- Atributos permanentes del sistema. Es lo que se usa cuando se llama 
+;-- a CLS
+;-- Formato:  Flash, Bright, paper (3-bits), ink (3-bits)
+ATTR_S: EQU $5C8D
+
+;-------------------------------------------------
+;-- Rutina de CLS en ROM
+;-- Altera el valor de los registros AF, BC, DE Y HL
+;----------------------------------------------------
+ROM_CLS: EQU $0DAF
+
