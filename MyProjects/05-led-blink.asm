@@ -1,0 +1,49 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER BLACK
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, GREEN
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+
+loop:
+    
+    ;-- Dibujar led apagado
+    ld hl, $4000
+    ld de, sprite_led_off
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_500ms
+
+    ;-- Dibujar led encendido
+    ld hl, $4000
+    ld de, sprite_led_on
+    call draw_sprite8
+
+    ;-- Esperar
+    call wait_500ms
+
+    jr loop
+
+;-------------------
+;-- SPRITES
+;-------------------  
+;-- Led apagado
+sprite_led_off: DEFB $00, $3C, $42, $42, $42, $42, $3C, $00
+
+;-- Led encendido
+sprite_led_on:  DEFB $00, $3C, $7E, $7E, $7A, $76, $3C, $00
+
+
+    include "Video.asm"
+    include "Keyboard.asm"
+    include "Delay.asm"
+
+    end $8000

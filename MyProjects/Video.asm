@@ -24,3 +24,25 @@ cls:
     ldir
 
     ret
+
+;-----------------------------------------------------------------------------
+;-- draw_sprite: Dibujar un sprite (de 8 lineas) en la pantalla (de 8 lineas)
+;-- 
+;-- ENTRADAS:
+;--   * HL: Direccion de la memoria de video
+;--   * DE: Direccion del sprite a pintar
+;-----------------------------------------------------------------------------
+draw_sprite8:
+  
+  ld b, 8  ;-- El sprite tiene 8 lineas
+
+sprite_loop:
+  ld a, (de)  ;-- Leer byte del sprite
+  ld (hl), a  ;-- Mostrar byte en pantalla
+  inc h       ;-- Siguiente linea
+  inc de      ;-- Siguiente byte
+  djnz sprite_loop
+
+  ret
+
+
