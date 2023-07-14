@@ -102,4 +102,24 @@ sprite18_loop:
 
   ret
 
+;----------------------------------------------------------------------------
+;-- blank_sprite18: Borrar todos los pixeles de un sprite de 18 lines
+;--
+;-- ENTRADAS:
+;--   * HL: Direccion de la memoria de video
+;----------------------------------------------------------------------------
+blank_sprite18:
+  ld b, 18  ;-- Sprite de 18 lineas
+
+blank_sprite18_loop:
+  xor a        ;-- A = 0
+  ld (hl), a   ;-- Borrar linea
+
+  ;-- Siguiente linea
+  call NextScan
+
+  ;-- Repetir
+  djnz blank_sprite18_loop
+  
+  ret
 

@@ -1,0 +1,96 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER BLACK
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, WHITE
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+
+loop:
+    
+    ;-- Fotograma 1
+    ld hl, $4000
+    ld de, sprite_Manic_miner0
+    call draw_sprite18
+
+    ld hl, $4001
+    call blank_sprite18
+
+    ;-- Esperar
+    call wait_500ms
+
+    ;-- Fotograma 2
+    ld hl, $4000
+    ld de, sprite_Manic_miner1
+    call draw_sprite18
+
+    ld hl, $4001
+    call blank_sprite18
+
+    ;-- Esperar
+    call wait_500ms
+
+    ;-- Fotograma 3
+    ld hl, $4000
+    ld de, sprite_Manic_miner2
+    call draw_sprite18
+
+    ld hl, $4001
+    ld de, sprite_Manic_miner2_2
+    call draw_sprite18
+
+    ;-- Esperar
+    call wait_500ms
+
+    ;-- Fotograma 4
+    ld hl, $4000
+    ld de, sprite_Manic_miner1
+    call draw_sprite18
+
+    ld hl, $4001
+    call blank_sprite18
+
+    ;-- Esperar
+    call wait_500ms
+
+    jr loop
+
+;-------------------
+;-- SPRITES
+;-------------------  
+;-- Manic Miner 0
+sprite_Manic_miner0: 
+  DEFB $00, $06, $3E, $7C, $34, $3E, $3C, $18 
+  DEFB $3C, $6E, $6E, $6E, $76, $3C, $18, $18
+  DEFB $1C, $00
+
+;-- Manic Miner 1
+sprite_Manic_miner1:
+  DEFB $00, $06, $3E, $7C, $34, $3E, $3C, $18 
+  DEFB $3C, $7E, $7E, $57, $FB, $3C, $36, $6E
+  DEFB $77, $00
+
+;-- Manic Miner 2-1
+sprite_Manic_miner2:
+  DEFB $00, $06, $3E, $7C, $34, $3E, $3C, $18 
+  DEFB $3C, $3F, $7F, $FF, $DE, $1F, $3B, $61
+  DEFB $71, $00
+
+;-- Manic Miner 2-2
+sprite_Manic_miner2_2:
+  DEFB $00, $00, $00, $00, $00, $00, $00, $00 
+  DEFB $00, $00, $80, $C0, $C0, $00, $40, $C0
+  DEFB $80, $00
+
+
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
+
+    end $8000
