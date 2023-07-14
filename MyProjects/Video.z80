@@ -102,6 +102,33 @@ sprite18_loop:
 
   ret
 
+
+;-----------------------------------------------------------------------------
+;-- draw_sprite16: Dibujar un sprite (de 16 lineas) en la pantalla
+;-- 
+;-- ENTRADAS:
+;--   * HL: Direccion de la memoria de video
+;--   * DE: Direccion del sprite a pintar
+;-----------------------------------------------------------------------------
+draw_sprite16:
+  
+  ld b, 16  ;-- El sprite tiene 18 lineas
+
+sprite16_loop:
+  ld a, (de)  ;-- Leer byte del sprite
+  ld (hl), a  ;-- Mostrar byte en pantalla
+
+  ;-- Siguiente linea
+  call NextScan
+  
+  ;-- Siguiente byte
+  inc de
+
+  ;-- Repetir
+  djnz sprite16_loop
+
+  ret
+
 ;----------------------------------------------------------------------------
 ;-- blank_sprite18: Borrar todos los pixeles de un sprite de 18 lines
 ;--
@@ -109,7 +136,7 @@ sprite18_loop:
 ;--   * HL: Direccion de la memoria de video
 ;----------------------------------------------------------------------------
 blank_sprite18:
-  ld b, 18  ;-- Sprite de 18 lineas
+  ld b, 18  ;-- Sprite de 16 lineas
 
 blank_sprite18_loop:
   xor a        ;-- A = 0
@@ -120,6 +147,27 @@ blank_sprite18_loop:
 
   ;-- Repetir
   djnz blank_sprite18_loop
+
+  ret
+
+;----------------------------------------------------------------------------
+;-- blank_sprite16: Borrar todos los pixeles de un sprite de 16 lines
+;--
+;-- ENTRADAS:
+;--   * HL: Direccion de la memoria de video
+;----------------------------------------------------------------------------
+blank_sprite16:
+  ld b, 16  ;-- Sprite de 16 lineas
+
+blank_sprite16_loop:
+  xor a        ;-- A = 0
+  ld (hl), a   ;-- Borrar linea
+
+  ;-- Siguiente linea
+  call NextScan
+
+  ;-- Repetir
+  djnz blank_sprite16_loop
   
   ret
 
