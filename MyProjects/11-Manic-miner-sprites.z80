@@ -1,0 +1,143 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER RED
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, WHITE
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+
+    ;-- Pintar la parte estática
+    ld hl, $4000
+    ld de, sprite_ladrillos
+    call draw_sprite8
+
+    ld hl, $4020
+    ld de, sprite_ladrillos
+    call draw_sprite8
+
+    ld hl, $4040
+    ld de, sprite_ladrillos
+    call draw_sprite8
+
+    ;-- Atributos de los ladrillos
+    ld hl, $5800
+    ld a, YELLOW << PAPER | RED
+    ld (hl), a
+    ld ($5820), a
+    ld ($5840), a
+
+    ;-- Suelo
+    ld hl, $4041
+    ld de, sprite_suelo
+    call draw_sprite8
+
+    ld hl, $4042
+    ld de, sprite_suelo
+    call draw_sprite8
+
+    ld hl, $4043
+    ld de, sprite_suelo
+    call draw_sprite8
+
+    ;-- Atributo del suelo
+    ld a, BRIGHT | RED
+    LD ($5841), a
+    LD ($5842), a
+    ld ($5843), a
+
+    ;-- Estalactita
+    ld hl, $4010
+    ld de, sprite_stalactica
+    call draw_sprite8
+
+    ld a, CYAN
+    ld ($5810), a
+
+    ;-- Llave
+    ld hl, $4012
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld a, GREEN
+    ld ($5812),a
+    
+    ;-- Fotograma 1
+    ld hl, $4002
+    ld de, sprite_Manic_miner0
+    call draw_sprite16
+
+    ;-- Fotograma 2
+    ld hl, $4004
+    ld de, sprite_Manic_miner1
+    call draw_sprite16
+
+    ;-- Fotograma 3
+    ld hl, $4006
+    ld de, sprite_Manic_miner2
+    call draw_sprite16
+
+    ld hl, $4007
+    ld de, sprite_Manic_miner2_2
+    call draw_sprite16
+
+    ;-- Fotograma 4
+    ld hl, $4008
+    ld de, sprite_Manic_miner1
+    call draw_sprite16
+
+inf: jr inf
+
+
+
+;-------------------
+;-- SPRITES
+;-------------------  
+;-- Manic Miner 0
+sprite_Manic_miner0: 
+  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C 
+  DEFB $6E, $6E, $6E, $76, $3C, $18, $18, $1C
+
+;-- Manic Miner 1
+sprite_Manic_miner1:
+  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C
+  DEFB $7E, $7E, $F7, $FB, $3C, $36, $6E, $77
+
+;-- Manic Miner 2-1
+sprite_Manic_miner2:
+  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C 
+  DEFB $3F, $7F, $FF, $DE, $1F, $3B, $61, $71
+
+;-- Manic Miner 2-2
+sprite_Manic_miner2_2:
+  DEFB $00, $00, $00, $00, $00, $00, $00, $00 
+  DEFB $00, $80, $C0, $C0, $00, $40, $C0, $80
+  
+;--- Ladrillos
+sprite_ladrillos:
+  DEFB $DD, $00, $77, $00, $DD, $00, $77, $00
+
+;--- Suelo
+sprite_suelo:
+  DEFB $FF, $FF, $DD, $6E, $C5, $40, $00, $00
+
+;--- Estalactita
+sprite_stalactica:
+  DEFB $FF, $FE, $7E, $7C, $4C, $4C, $08, $08
+
+;--- Llave
+sprite_llave:
+  DEFB $30, $48, $88, $90, $68, $04, $0A, $04
+
+
+
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
+
+    end $8000

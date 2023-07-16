@@ -12,6 +12,9 @@ WHITE:    EQU 7
 ;-- Campo para acceder al atributo PAPER
 PAPER:    EQU 3
 
+BRIGHT:   EQU $40
+FLASH:    EQU $80
+
 ;-- Puerto de salida para establecer el color del borde
 BORDER_PORT: EQU $FE
 
