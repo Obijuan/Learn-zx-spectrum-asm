@@ -110,7 +110,7 @@ sprite_Manic_miner1:
 
 ;-- Manic Miner 2-1
 sprite_Manic_miner2:
-  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C 
+  DEFB $03, $1F, $3E, $1A, $1F, $1E, $0C, $1E 
   DEFB $3F, $7F, $FF, $DE, $1F, $3B, $61, $71
 
 ;-- Manic Miner 2-2
