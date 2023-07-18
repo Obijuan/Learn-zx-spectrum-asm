@@ -171,3 +171,95 @@ blank_sprite16_loop:
   
   ret
 
+;---------------------------------------------------------------------------
+;- DF_LOC: Devolver la memoria de video asociada a la posicon (LNEA,COL)
+;-
+;-- ENTRADAS:
+;--    * B = Linea (0-23)
+;--    * C = Col (0 - 31)
+;--
+;-- SALIDA:
+;--    * HL: Direccion de video
+;--
+;-- Formato de la direccion de video:
+;-- 010T TSSS LLLC CCCC
+;--
+;-- El tercio se toma como parte de la linea para trabajar en el rango 0-21 
+;-- Así la linea es TTLLL (5-bits). Está formada por dos campos
+;---------------------------------------------------------------------------
+DF_LOC:
+
+    ld a,b    ;-- A = Linea (000T TLLL)
+    and $f8   ;-- Poner a 0 los bits L (dejando solo los T)
+              ;-- A = 000T T000
+    add a,$40 ;-- A = 0100 0000 --> 010T T000
+    ;-- H completado: Contiene valor corrector y el Tercio establecido (TT)
+    ld h, a   ;-- H = 010T T000
+
+    ;-- Establecer la parte baja en reg L (LLLC CCCC)
+    ld a,b    ;-- A = linea (000T TLLL)
+    and $7    ;-- A = 000T TLLL
+              ;--     0000 0111
+              ;-- A = 0000 0LLL  (Nos quedamos con la linea)
+    rrca      ;-- A = L000 00LL
+    rrca      ;-- A = LL00 000L
+    rrca      ;-- A = LLL0 0000 (Tenemos LLL bien posicionado)
+
+    ;-- Añadir el campo de la columna (que esta en C)
+    add a,c
+
+    ;-- Actualizar L
+    ld l,a
+
+    ;-- HL contiene la direccion
+    ret
+
+;---------------------------------------------------------------------------
+;- ATTLOC: Devolver la memoria de video de atributos asociada a la
+;-         posicion (LINEA, COL)
+;-
+;-- ENTRADAS:
+;--    * B = Linea (0-23)
+;--    * C = Col (0 - 31)
+;--
+;-- SALIDA:
+;--    * HL: Direccion de video de atributos
+;--
+;---------------------------------------------------------------------------
+ATTLOC:
+
+    ld a,b   ;-- A = Linea (000TTLLL)
+
+    ;-- Obtener los bits asociados al tercio
+    sra a      ;-- A = 0000TTLL
+    sra a      ;-- A = 00000TTL
+    sra a      ;-- A = 000000TT
+
+    ;-- Añadir comienzo de memoria de atributos (0x5800)
+    add a,$58  ;-- 58  01011000
+               ;-- A = 010110TT
+
+    ;-- Ya tenemos H listo
+    ld h,a 
+
+    ;-- Leer la linea de nuevo
+    ld a,b   ;-- A = 000TTLLL
+
+    ;-- Aislar el campo LLL
+    and $7   ;   7 = 00000111
+             ;   A = 00000LLL
+
+    ;-- Colocar LLL en los bits e mayor peso
+    rrca     ;   A = L00000LL
+    rrca     ;   A = LL00000L
+    rrca     ;   A = LLL00000
+
+    ;-- Añadir la columna
+    add a,c  ;   A = LLLCCCCC
+
+    ;-- Ya tenemos L listo
+    ld l,a
+
+    ;-- Terminar
+    ret
+

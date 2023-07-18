@@ -1,0 +1,505 @@
+  include "zxspectrum.h"  
+
+  org $8000
+  
+  ;------------- Pasar a Dark Mode ------------
+  BORDER RED
+  
+  ;-- Establecer los atributos permanentes
+  SET_ATTR_S BLACK, WHITE
+
+  ;-- Borrar la pantalla
+  CALL ROM_CLS
+  ;--------------------------------------------
+
+  call draw_left_border
+  call draw_right_border
+
+  call draw_suelo1
+
+  ;-- Dibujar suelo
+  ld b,5
+  ld c,1
+  ld a, 13
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,5
+  ld c,1
+  ld a,13
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+  ;-- Dibujar suelo
+  ld b,7
+  ld c,1
+  ld a, 3
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,7
+  ld c,1
+  ld a,3
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+  ;-- Dibujar suelo
+  ld b,9
+  ld c,1
+  ld a, 4
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,9
+  ld c,1
+  ld a,4
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+
+
+  ;-- Dibujar suelo
+  ld b,13
+  ld c,5
+  ld a, 19
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,13
+  ld c,5
+  ld a,19
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+
+  
+
+  ;-- Dibujar suelo
+  ld b,12
+  ld c,28
+  ld a, 30
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,12
+  ld c,28
+  ld a,30
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+  ;-- Dibujar suelo
+  ld b,10
+  ld c,29
+  ld a, 30
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,10
+  ld c,29
+  ld a,30
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+  
+  ;-- Dibujar suelo
+  ld b,5
+  ld c,23
+  ld a,30
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,5
+  ld c,23
+  ld a,30
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+
+  ;-- Dibujar suelo
+  ld b,5
+  ld c,18
+  ld a,18
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,5
+  ld c,18
+  ld a,18
+  ld d, BRIGHT | RED
+  call lineah_attr
+
+
+    ;-- Estalactita 2
+    ld b,0
+    ld c,16
+    call DF_LOC
+    ld de, sprite_stalactica
+    call draw_sprite8
+
+    ld b,0
+    ld c,16
+    call ATTLOC
+    ld a, CYAN
+    ld (hl), a
+
+   ;-- Estalactita 1
+    ld b,0
+    ld c,11
+    call DF_LOC
+    ld de, sprite_stalactica
+    call draw_sprite8
+
+    ld b,0
+    ld c,11
+    call ATTLOC
+    ld a, CYAN
+    ld (hl), a
+
+
+    ;-- Llave 1
+    ld b,0
+    ld c,9
+    call DF_LOC
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld b,0
+    ld c,9
+    call ATTLOC
+    ld a, CYAN
+    ld (hl),a
+
+    ;-- Llave 2
+    ld b,1
+    ld c,16
+    call DF_LOC
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld b,1
+    ld c,16
+    call ATTLOC
+    ld a, MAGENTA
+    ld (hl),a
+
+    ;-- Llave 3
+    ld b,0
+    ld c,29
+    call DF_LOC
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld b,0
+    ld c,29
+    call ATTLOC
+    ld a, YELLOW
+    ld (hl),a
+
+     ;-- Llave 4
+    ld b,4
+    ld c,24
+    call DF_LOC
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld b,4
+    ld c,24
+    call ATTLOC
+    ld a, GREEN
+    ld (hl),a
+
+     ;-- Llave 5
+    ld b,6
+    ld c,30
+    call DF_LOC
+    ld de, sprite_llave
+    call draw_sprite8
+
+    ld b,6
+    ld c,30
+    call ATTLOC
+    ld a, CYAN
+    ld (hl),a
+    
+    ;-- Fotograma 1
+    ld hl, $48A2  ;1010 0010
+    ld de, sprite_Manic_miner1
+    call draw_sprite16
+
+inf: jr inf
+
+;-------------------
+;-- SPRITES
+;-------------------  
+;-- Manic Miner 0
+sprite_Manic_miner0: 
+  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C 
+  DEFB $6E, $6E, $6E, $76, $3C, $18, $18, $1C
+
+;-- Manic Miner 1
+sprite_Manic_miner1:
+  DEFB $06, $3E, $7C, $34, $3E, $3C, $18, $3C
+  DEFB $7E, $7E, $F7, $FB, $3C, $36, $6E, $77
+
+;-- Manic Miner 2-1
+sprite_Manic_miner2:
+  DEFB $03, $1F, $3E, $1A, $1F, $1E, $0C, $1E 
+  DEFB $3F, $7F, $FF, $DE, $1F, $3B, $61, $71
+
+;-- Manic Miner 2-2
+sprite_Manic_miner2_2:
+  DEFB $00, $00, $00, $00, $00, $00, $00, $00 
+  DEFB $00, $80, $C0, $C0, $00, $40, $C0, $80
+  
+;--- Ladrillos
+sprite_ladrillos:
+  DEFB $DD, $00, $77, $00, $DD, $00, $77, $00
+
+;--- Suelo
+sprite_suelo:
+  DEFB $FF, $FF, $DD, $6E, $C5, $40, $00, $00
+
+;--- Estalactita
+sprite_stalactica:
+  DEFB $FF, $FE, $7E, $7C, $4C, $4C, $08, $08
+
+;--- Llave
+sprite_llave:
+  DEFB $30, $48, $88, $90, $68, $04, $0A, $04
+
+
+;----------------------------------------------------------------------------
+;--  draw_left_border: Dibujar el muro izquierdo de la pantalla 1
+;----------------------------------------------------------------------------
+draw_left_border:
+
+  ;-- Posicion final en A
+  ld a, 15
+
+  ;--- Asignar atributos a una linea vertical
+  ld b, 0  ;-- Linea
+  ld c, 0   ;-- Columna
+
+  ld d, YELLOW << PAPER | RED
+  call lineav_attr
+
+  ;-- Meter en A la posicion final
+  ld a, 15
+
+  ;-- Pintar muro de ladrillos izquierdo
+  ld b, 0       ;--- Linea 0
+  ld c, 0       ;--- Col   0
+  ld de, sprite_ladrillos
+  call lineav_sprite
+
+  ret
+
+;----------------------------------------------------------------------------
+;--  draw_right_border: Dibujar el muro derecho de la pantalla 1
+;----------------------------------------------------------------------------
+draw_right_border:
+
+;-- Posicion final en A
+  ld a, 15
+
+  ;--- Asignar atributos a una linea vertical
+  ld b, 0  ;-- Linea
+  ld c, 31   ;-- Columna
+
+  ld d, YELLOW << PAPER | RED
+  call lineav_attr
+
+  ;-- Meter en A la posicion final
+  ld a, 15
+
+  ;-- Pintar muro de ladrillos izquierdo
+  ld b, 0       ;--- Linea 0
+  ld c, 31       ;--- Col   0
+  ld de, sprite_ladrillos
+  call lineav_sprite
+
+  ret
+
+
+;----------------------------------------------------------------------------
+;-- lineav_attr:  Establecer una linea vertical de atributos
+;--
+;-- ENTRADAS:
+;--   * B: linea inicial (0-23)
+;--   * C: Columna (0-31)
+;--   * A: Linea final (0-23)
+;--   * D: Atributos a escribir
+;----------------------------------------------------------------------------
+lineav_attr:
+linev_attr_loop:
+
+
+  ;-- Preservar linea final
+  push af
+
+  ;-- Preservar posicion inicial
+  push bc
+
+  ;-- HL: Direccion de la memoria de atributos de la posicion actual
+  call ATTLOC
+
+  ;-- Recuperar posicion actual
+  pop bc
+
+  ;-- Guardar el atributo
+  ld a, d
+  ld (hl), a
+
+  ;-- Recuperar la linea final
+  pop af
+
+  ;-- Incrementar la fila actual
+  inc b
+
+  ;-  Linea actual > linea final?
+  cp b
+  jr nc, linev_attr_loop  ;-- Linea actual < linea final: Repetir
+  jr z, linev_attr_loop   ;-- Linea actual = linea final: Repetir (ultima vez)
+
+  ;-- Se ha sobrepasado la linea final. Terminar
+  ret
+
+
+;----------------------------------------------------------------------------
+;-- lineah_attr:  Establecer una linea horizontal de atributos
+;--
+;-- ENTRADAS:
+;--   * B: linea inicial (0-23)
+;--   * C: Columna (0-31)
+;--   * A: Columna final (0-23)
+;--   * D: Atributos a escribir
+;----------------------------------------------------------------------------
+lineah_attr:
+lineh_attr_loop:
+
+
+  ;-- Preservar linea final
+  push af
+
+  ;-- Preservar posicion inicial
+  push bc
+
+  ;-- HL: Direccion de la memoria de atributos de la posicion actual
+  call ATTLOC
+
+  ;-- Recuperar posicion actual
+  pop bc
+
+  ;-- Guardar el atributo
+  ld a, d
+  ld (hl), a
+
+  ;-- Recuperar la linea final
+  pop af
+
+  ;-- Incrementar la columna actual
+  inc c
+
+  ;-  Col actual > Col final?
+  cp c
+  jr nc, lineh_attr_loop  ;-- Col actual < col final: Repetir
+  jr z, lineh_attr_loop   ;-- Col actual = col final: Repetir (ultima vez)
+
+  ;-- Se ha sobrepasado la linea final. Terminar
+  ret
+
+
+
+
+
+;----------------------------------------------------------------------------
+;-- lineav_sprite:  Establecer una linea vertical de sprites
+;--
+;-- ENTRADAS:
+;--   * B: linea inicial (0-23)
+;--   * C: Columna (0-31)
+;--   * A: Linea final (0-23)
+;--   * DE: Direccion del sprite
+;----------------------------------------------------------------------------
+lineav_sprite:
+linev_sprite_loop:
+
+  push af
+  push bc
+  push de
+
+  call DF_LOC
+  call draw_sprite8
+
+  pop de
+  pop bc
+  pop af
+  inc b
+  
+  cp b
+  jr nc, linev_sprite_loop
+  jr z, linev_sprite_loop
+
+  ret
+  
+
+;----------------------------------------------------------------------------
+;-- lineah_sprite:  Establecer una linea horizontal de sprites
+;--
+;-- ENTRADAS:
+;--   * B: linea inicial (0-23)
+;--   * C: Columna (0-31)
+;--   * A: Columna final (0-23)
+;--   * DE: Direccion del sprite
+;----------------------------------------------------------------------------
+lineah_sprite:
+lineh_sprite_loop:
+
+  push af
+  push bc
+  push de
+
+  call DF_LOC
+  call draw_sprite8
+
+  pop de
+  pop bc
+  pop af
+  inc c
+  
+  cp c
+  jr nc, lineh_sprite_loop
+  jr z, lineh_sprite_loop
+
+  ret
+
+draw_suelo1:
+  ;-- Dibujar suelo
+  ld b,15
+  ld c,1
+  ld a, 30
+  ld de, sprite_suelo
+  call lineah_sprite
+
+  ;-- Atributos suelo
+  ld b,15
+  ld c,1
+  ld a,30
+  ld d, BRIGHT | RED
+  call lineah_attr
+  ret
+
+
+    include "Video.z80"
+    include "Keyboard.z80"
+    include "Delay.z80"
+
+    end $8000
